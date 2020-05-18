@@ -15,36 +15,6 @@
 
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="/">
-                    Project
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="/login">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/register">Register</a>
-                            </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
         <main class="py-4">
             <div class="container">
                 <div class="row justify-content-center">
@@ -92,7 +62,7 @@
                                         <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
 
                                         <div class="col-md-6">
-                                            <input <  type="password" class="form-control" name="password_confirmation"  autocomplete="new-password">
+                                            <input   type="password" class="form-control" name="password_confirmation"  autocomplete="new-password">
                                             <h5 style="color:red">
                                                 flash message
                                             </h5>

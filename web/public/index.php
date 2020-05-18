@@ -13,3 +13,4 @@ $foo = new App\Acme\Foo();
         <h1>Docker <?php echo $foo->getName(); ?></h1>
     </body>
 </html>
+
