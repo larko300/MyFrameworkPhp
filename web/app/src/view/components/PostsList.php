@@ -1,7 +1,9 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header"><h3>Posts</h3></div>
-        <?php foreach ($posts as $post): ?>
+        <?php
+
+        foreach ($data as $post): ?>
         <div class="card-body">
             <div class="alert alert-success" role="alert">
                 Alerts
