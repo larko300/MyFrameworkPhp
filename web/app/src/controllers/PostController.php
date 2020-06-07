@@ -8,8 +8,18 @@ use App\View\View;
 
 class PostController
 {
-    public static function index()
+    public function index()
     {
-        return View::render(['PostsList', 'AddPostForm'], Post::findAll());
+        View::render(['PostsList', 'AddPostForm'], Post::findAll());
+    }
+
+    public function create()
+    {
+        $user = User::getById(1);
+        $post = new Post();
+        $post->setBody($_POST['body']);
+        $post->setOwner($user);
+        $post->save();
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 }

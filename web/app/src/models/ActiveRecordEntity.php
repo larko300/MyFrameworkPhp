@@ -26,12 +26,6 @@ abstract class ActiveRecordEntity
         return $entities ? $entities[0] : null;
     }
 
-    public function __set(string $name, $value)
-    {
-        $camelCaseName = $this->underscoreToCamelCase($name);
-        $this->$camelCaseName = $value;
-    }
-
     public function save(): void
     {
         $mappedProperties = $this->mapPropertiesToDbFormat();
@@ -61,6 +55,13 @@ abstract class ActiveRecordEntity
         $db->delete(static::getTableName(), $this->id);
         $this->id = null;
     }
+
+    public function __set(string $name, $value)
+    {
+        $camelCaseName = $this->underscoreToCamelCase($name);
+        $this->$camelCaseName = $value;
+    }
+
 
     private function mapPropertiesToDbFormat(): array
     {

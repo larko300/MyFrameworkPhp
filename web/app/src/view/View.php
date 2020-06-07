@@ -19,6 +19,6 @@ class View
         require "../app/src/view/layout/LayoutEnd.php";
         $markup = ob_get_contents();
         ob_end_clean();
-        return $markup;
+        echo $markup;
     }
 }

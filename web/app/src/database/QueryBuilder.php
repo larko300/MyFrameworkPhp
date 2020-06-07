@@ -39,11 +39,12 @@ class QueryBuilder
 
     public function create($table, $data)
     {
-        $keys = implode(',', array_keys($data));
-        $tegs = ":" . implode(', :', array_keys($data));
+        $filteredData = array_filter($data);
+        $keys = implode(',', array_keys($filteredData));
+        $tegs = ":" . implode(', :', array_keys($filteredData));
         $sql = "INSERT INTO {$table} ({$keys}) VALUES ({$tegs})";
         $statement = $this->pdo->prepare($sql);
-        return $statement->execute($data);
+        return $statement->execute($filteredData);
     }
 
     public function getOne($table, $id, string $className = 'stdClass')

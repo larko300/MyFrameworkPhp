@@ -7,7 +7,6 @@ use App\Model\ActiveRecordEntity;
 
 class Post extends ActiveRecordEntity
 {
-
     protected $body;
 
     protected $userId;
@@ -39,7 +38,7 @@ class Post extends ActiveRecordEntity
         return User::getById($this->userId);
     }
 
-    public function setOwnerId(User $user): string
+    public function setOwner(User $user): string
     {
         return $this->userId = $user->getId();
     }
