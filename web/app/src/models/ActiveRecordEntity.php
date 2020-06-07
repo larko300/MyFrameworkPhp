@@ -16,7 +16,7 @@ abstract class ActiveRecordEntity
     public static function findAll()
     {
         $db = QueryBuilder::getInstance();
-        return $db->getAll(static::getTableName(),static::class);
+        return $db->getAll(static::getTableName(), static::class);
     }
 
     public static function getById(int $id)
@@ -54,6 +54,16 @@ abstract class ActiveRecordEntity
         $db = QueryBuilder::getInstance();
         $db->delete(static::getTableName(), $this->id);
         $this->id = null;
+    }
+
+    public static function findOneByColumn(string $columnName, $value)
+    {
+        $db = QueryBuilder::getInstance();
+        $result = $db->getOneByRow(static::getTableName(), $columnName, $value, static::class);
+        if ($result === []) {
+            return null;
+        }
+        return $result[0];
     }
 
     public function __set(string $name, $value)

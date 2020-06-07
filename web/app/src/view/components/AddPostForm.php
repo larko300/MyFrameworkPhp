@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-header"><h3>Add post</h3></div>
         <div class="card-body">
-            <form action="/post/create" method="post">
+            <form action="/posts/create" method="post">
                 <div class="form-group">
                     <textarea name="body" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>

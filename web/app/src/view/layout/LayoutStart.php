@@ -22,16 +22,20 @@
                     <a class="navbar-brand" href="/">
                         Project
                     </a>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="/profile">User name</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/logout">Logout</a>
-                            </li>
-                        </ul>
-                    </div>
+                    <?php
+                    $user = App\Services\UsersAuthService::getUserByToken();
+                    if (!empty($user)) : ?>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/profile"><?= $user->getName() ?></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/logout">Logout</a>
+                                </li>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </nav>
             <div class="row justify-content-center">

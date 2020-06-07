@@ -2,16 +2,19 @@
     <div class="card">
         <div class="card-header">Register</div>
         <div class="card-body">
-            <form method="POST" action="/register/validation">
+            <form method="POST" action="/users/register">
+
+                <?php if (!empty($data)) : ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?= $data ?>
+                    </div>
+                <?php endif; ?>
 
                 <div class="form-group row">
                     <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
 
                     <div class="col-md-6">
-                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" autofocus>
-                        <h5 style="color:red">
-                            alert
-                        </h5>
+                        <input id="name" type="text" class="form-control" value="<?= $_POST['name'] ?>" name="name" autofocus>
                     </div>
                 </div>
 
@@ -19,10 +22,7 @@
                     <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
 
                     <div class="col-md-6">
-                        <input id="email" type="email" class="form-control" name="email" >
-                        <h5 style="color:red">
-                            flash message
-                        </h5>
+                        <input id="email" type="email" value="<?= $_POST['email']?>" class="form-control" name="email" >
                     </div>
                 </div>
 
@@ -31,9 +31,6 @@
 
                     <div class="col-md-6">
                         <input  type="password" class="form-control " name="password"  autocomplete="new-password">
-                        <h5 style="color:red">
-                            flash message
-                        </h5>
                     </div>
                 </div>
 
@@ -42,9 +39,6 @@
 
                     <div class="col-md-6">
                         <input   type="password" class="form-control" name="password_confirmation"  autocomplete="new-password">
-                        <h5 style="color:red">
-                            flash message
-                        </h5>
                     </div>
                 </div>
 

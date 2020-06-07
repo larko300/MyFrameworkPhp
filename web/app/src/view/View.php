@@ -5,7 +5,7 @@ namespace App\View;
 class View
 {
 
-    public static function render($components, $data)
+    public static function render($components, $data = '')
     {
         ob_start();
         require "../app/src/view/layout/LayoutStart.php";

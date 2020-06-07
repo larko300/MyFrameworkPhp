@@ -2,7 +2,9 @@
 
 $routes = [
     '/' => ['App\Controller\PostController', 'index'],
-    '/post/create' => ['App\Controller\PostController', 'create'],
+    '/posts/create' => ['App\Controller\PostController', 'create'],
+    '/users/register' => ['App\Controller\UserController', 'singUp'],
+    '/users/login' => ['App\Controller\UserController', 'login']
 ];
 
 $route = $_SERVER['REQUEST_URI'];

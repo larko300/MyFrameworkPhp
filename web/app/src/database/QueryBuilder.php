@@ -47,13 +47,22 @@ class QueryBuilder
         return $statement->execute($filteredData);
     }
 
+    public function getOneByRow($table, $column, $value, string $className = 'stdClass')
+    {
+        $sql = "SELECT * FROM {$table} WHERE {$column}=:value";
+        $statement = $this->pdo->prepare($sql);
+        $statement->bindValue(':value', $value);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS, $className);
+    }
+
     public function getOne($table, $id, string $className = 'stdClass')
     {
         $sql = "SELECT * FROM {$table} WHERE id=:id";
         $statement = $this->pdo->prepare($sql);
         $statement->bindValue(':id', $id);
         $statement->execute();
-        return $statement->fetchAll(\PDO::FETCH_CLASS, $className);
+        return $statement->fetchAll(PDO::FETCH_CLASS, $className);
     }
 
     public function update($table, $data, $id)
