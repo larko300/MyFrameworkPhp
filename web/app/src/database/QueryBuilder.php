@@ -8,7 +8,9 @@ class QueryBuilder
 {
     protected $pdo;
 
-    public function __construct()
+    private static $instance;
+
+    private function __construct()
     {
         $dbOptions = (require __DIR__ . '/../config.php')['database'];
         $this->pdo = new PDO(
@@ -18,29 +20,21 @@ class QueryBuilder
         );
     }
 
-    public function getAll($table)
+    public static function getInstance(): self
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
+    public function getAll($table, string $className = 'stdClass')
     {
         $sql = "SELECT * FROM {$table}";
         $statement = $this->pdo->prepare($sql);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-
-    public function getAllJoin($table, $joinTalble, $reletedRow)
-    {
-        $sql = "SELECT * FROM {$table} JOIN {$joinTalble} ON {$table}.{$reletedRow}={$joinTalble}.{$reletedRow}";
-        $statement = $this->pdo->prepare($sql);
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function getAllJoinWhere($table, $joinTalbl, $reletedRow, $row, $value)
-    {
-        $sql = "SELECT * FROM {$table} JOIN {$joinTalbl} ON {$table}.{$reletedRow}={$joinTalbl}.{$reletedRow} WHERE {$row}={$value}";
-        $statement = $this->pdo->prepare($sql);
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $statement->fetchAll(PDO::FETCH_CLASS, $className);
     }
 
     public function create($table, $data)
@@ -52,34 +46,16 @@ class QueryBuilder
         return $statement->execute($data);
     }
 
-    public function getOne($table, $id)
+    public function getOne($table, $id, string $className = 'stdClass')
     {
         $sql = "SELECT * FROM {$table} WHERE id=:id";
         $statement = $this->pdo->prepare($sql);
         $statement->bindValue(':id', $id);
         $statement->execute();
-        return $statement->fetch(PDO::FETCH_ASSOC);
+        return $statement->fetchAll(\PDO::FETCH_CLASS, $className);
     }
 
-    public function getAllByRow($table, $row, $value)
-    {
-        $sql = "SELECT * FROM {$table} WHERE {$row}=:value";
-        $statement = $this->pdo->prepare($sql);
-        $statement->bindValue(':value', $value);
-        $statement->execute();
-        return $statement->fetch(PDO::FETCH_ASSOC);
-    }
-
-    public function getOneByRow($table, $data, $row, $value)
-    {
-        $sql = "SELECT {$data} FROM {$table} WHERE {$row}=:value";
-        $statement = $this->pdo->prepare($sql);
-        $statement->bindValue(':value', $value);
-        $statement->execute();
-        return $statement->fetch(PDO::FETCH_ASSOC);
-    }
-
-    public function update($table, $data, $idName, $id)
+    public function update($table, $data, $id)
     {
         $keys = array_keys($data);
         $string = '';
@@ -88,16 +64,21 @@ class QueryBuilder
         }
         $keys = rtrim($string, ',');
         $data['id'] = $id;
-        $sql = "UPDATE {$table} SET {$keys} WHERE {$idName}=:id";
+        $sql = "UPDATE {$table} SET {$keys} WHERE id =:id";
         $statement = $this->pdo->prepare($sql);
         $statement->execute($data);
     }
 
-    public function delete($table, $idName, $id)
+    public function delete($table, $id)
     {
-        $sql = "DELETE FROM {$table} WHERE {$idName}=:id";
+        $sql = "DELETE FROM {$table} WHERE id =:id";
         $statement = $this->pdo->prepare($sql);
         $statement->bindValue(':id', $id);
         $statement->execute();
+    }
+
+    public function getLastInsertId(): int
+    {
+        return (int) $this->pdo->lastInsertId();
     }
 }
