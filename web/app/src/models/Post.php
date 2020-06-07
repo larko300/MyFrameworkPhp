@@ -2,10 +2,13 @@
 
 namespace App\Model;
 
+use App\Db;
+
 class Post
 {
     public function getAll()
     {
-        return require "../app/src/data/Posts.php";
+        $db = new Db\QueryBuilder();
+        return $db->getAll('posts');
     }
 }

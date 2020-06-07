@@ -7,9 +7,9 @@ use App\View\View;
 
 class PostController
 {
-        public static function index()
-        {
-            $post = new Post();
-            return View::render(['PostsList', 'AddPostForm'], $post->getAll());
-        }
+    public static function index()
+    {
+        $post = new Post();
+        return View::render(['PostsList', 'AddPostForm'], $post->getAll());
+    }
 }
