@@ -6,6 +6,11 @@
             if (!empty($data['user'])) {
             ?>
                 <form action="/posts/create" method="post">
+                    <?php if (!empty($data['error'])) : ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?= $data['error'] ?>
+                        </div>
+                    <?php endif; ?>
                     <div class="form-group">
                         <textarea name="body" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
