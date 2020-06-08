@@ -4,7 +4,8 @@ $routes = [
     '/' => ['App\Controller\PostController', 'index'],
     '/posts/create' => ['App\Controller\PostController', 'create'],
     '/users/register' => ['App\Controller\UserController', 'singUp'],
-    '/users/login' => ['App\Controller\UserController', 'login']
+    '/users/login' => ['App\Controller\UserController', 'login'],
+    '/users/profile' => ['App\Controller\UserController', 'profile'],
 ];
 
 $route = $_SERVER['REQUEST_URI'];

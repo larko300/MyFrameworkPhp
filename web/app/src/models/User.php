@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\Exceptions\InvalidArgumentException;
 use App\Model\ActiveRecordEntity;
+use App\Services\UsersAuthService;
 
 class User extends ActiveRecordEntity
 {
@@ -87,9 +88,63 @@ class User extends ActiveRecordEntity
         return $user;
     }
 
+    public static function updateProfile(array $input, User $user): void
+    {
+        if (empty($input['name'])) {
+            throw new InvalidArgumentException('Name empty');
+        }
+
+        if (empty($input['email'])) {
+            throw new InvalidArgumentException('Email empty');
+        }
+
+        if (!preg_match('/^[a-zA-Z0-3]+$/', $input['name'])) {
+            throw new InvalidArgumentException('Only latin alphabet for name input and min length is 3');
+        }
+
+        if (!filter_var($input['email'], FILTER_VALIDATE_EMAIL)) {
+            throw new InvalidArgumentException('Email incorrect');
+        }
+
+        if (static::findOneByColumn('email', $input['email']) !== null && $_POST['email'] !== $user->getEmail() ) {
+            throw new InvalidArgumentException('This is email already usage');
+        }
+
+        $file_ext = strtolower(end(explode('.', $_FILES['image']['name'])));
+        $expensions= ["jpeg","jpg","png"];
+        if (in_array($file_ext,$expensions) === false && !empty($_FILES['image']['name'])) {
+            throw new InvalidArgumentException('Extension not allowed, please choose a JPEG or PNG file');
+        }
+
+        if ($_FILES['image']['size'] > 2097152) {
+            throw new InvalidArgumentException('File size must be less than 2 MB');
+        }
+        
+        if (!empty($_FILES['image']['name'])) {
+            $randomImageName = uniqid() . '.' . $file_ext;
+            move_uploaded_file($_FILES['image']['tmp_name'],  $_SERVER['DOCUMENT_ROOT'] . '/../app/src/img/' . $randomImageName);
+            $user->setImage($file_ext);
+        }
+
+        if ($input['email'] !== $user->getEmail()) {
+            $user->setEmail($input['email']);
+        }
+
+        if ($input['name'] !== $user->getName()) {
+            $user->setName($input['name']);
+        }
+
+        $user->save();
+    }
+
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function setName($name): void
+    {
+        $this->name = $name;
     }
 
     public function getAuthToken(): string
@@ -97,9 +152,24 @@ class User extends ActiveRecordEntity
         return $this->authToken;
     }
 
-    public function getPassword(): string
+    public function getEmail(): string
     {
-        return $this->password;
+        return $this->email;
+    }
+
+    public function setEmail($email): void
+    {
+        $this->email = $email;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image): void
+    {
+        $this->image = $image;
     }
 
     private function refreshAuthToken()

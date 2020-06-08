@@ -7,7 +7,7 @@
                 Alerts
             </div>
             <div class="media">
-                <img src="../img/no-user.jpg" class="mr-3" alt="..." width="64" height="64">
+                <img src="<?php echo ($post->getOwner()->getImage() !== null) ? $_SERVER['DOCUMENT_ROOT'] . '../app/src/img/' . $post->getOwner()->getImage()  : $_SERVER['DOCUMENT_ROOT'] . '/../app/src/img/no-user.jpg'?>" class="mr-3" alt="..." width="64" height="64">
                 <div class="media-body">
                     <h5 class="mt-0"><?= $post->getOwner()->getName() ?></h5>
                     <span><small><?= $post->getDate(); ?></small></span>

@@ -11,13 +11,15 @@
                 <?php endif; ?>
 
                 <?php
-                session_start();
                 if (!empty($_SESSION['flesh'])) :
-                    ?>
+                ?>
                     <div class="alert alert-success" role="alert">
                         <?= $_SESSION['flesh'] ?>
                     </div>
-                <?php endif; ?>
+                <?php
+                unset($_SESSION['flesh']);
+                endif;
+                ?>
 
                 <div class="form-group row">
                     <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>

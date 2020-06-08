@@ -18,9 +18,9 @@ class Post extends ActiveRecordEntity
         return $this->body;
     }
 
-    public function setBody($body): string
+    public function setBody($body): void
     {
-        return $this->body = $body;
+        $this->body = $body;
     }
 
     public function getDate(): string
@@ -28,9 +28,9 @@ class Post extends ActiveRecordEntity
         return $this->date;
     }
 
-    public function setDate($date): string
+    public function setDate($date): void
     {
-        return $this->date = $date;
+       $this->date = $date;
     }
 
     public function getOwner()
@@ -38,9 +38,9 @@ class Post extends ActiveRecordEntity
         return User::getById($this->userId);
     }
 
-    public function setOwner(User $user): string
+    public function setOwner(User $user): void
     {
-        return $this->userId = $user->getId();
+        $this->userId = $user->getId();
     }
 
     protected static function getTableName(): string

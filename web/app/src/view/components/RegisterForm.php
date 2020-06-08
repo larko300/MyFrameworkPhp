@@ -4,9 +4,9 @@
         <div class="card-body">
             <form method="POST" action="/users/register">
 
-                <?php if (!empty($data)) : ?>
+                <?php if (!empty($data['error'])) : ?>
                     <div class="alert alert-danger" role="alert">
-                        <?= $data ?>
+                        <?= $data['error'] ?>
                     </div>
                 <?php endif; ?>
 

@@ -15,7 +15,7 @@ class UserController
             try {
                 $user = User::signUp($_POST);
             } catch (InvalidArgumentException $e) {
-                View::render(['RegisterForm'], $e->getMessage());
+                View::render('RegisterForm', $e->getMessage());
                 exit();
             }
             if ($user instanceof User) {
@@ -38,12 +38,39 @@ class UserController
                 header('Location: /');
                 exit();
             } catch (InvalidArgumentException $e) {
-                View::render(['LoginForm'], [
+                View::render('LoginForm', [
                     'error' => $e->getMessage()
                 ]);
                 exit();
             }
         }
         View::render('LoginForm');
+    }
+
+    public function profile()
+    {
+        $user = UsersAuthService::getUserByToken();
+        if (!empty($_POST)) {
+            try {
+                User::updateProfile($_POST, $user);
+                session_start();
+                $_SESSION['flesh'] = 'Success';
+                header('Location: /users/profile');
+                exit();
+            } catch (InvalidArgumentException $e) {
+                View::render('Profile', [
+                    'error' => $e->getMessage()
+                ]);
+                exit();
+            }
+        }
+        if (!empty($user) && empty($_POST)) {
+            View::render('Profile', [
+                'user' => $user
+            ]);
+            exit();
+        } else {
+            header('Location: /');
+        }
     }
 }
