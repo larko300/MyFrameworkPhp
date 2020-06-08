@@ -1,9 +1,7 @@
 <?php
 
 namespace App\Controller;
-
 use App\Model\Post;
-use App\Model\User;
 use App\Services\UsersAuthService;
 use App\View\View;
 

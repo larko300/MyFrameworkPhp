@@ -19,7 +19,6 @@ class UserController
                 exit();
             }
             if ($user instanceof User) {
-                session_start();
                 $_SESSION['flesh'] = 'Success. Please sign in.';
                 header('Location: /users/login');
                 exit();
@@ -53,7 +52,6 @@ class UserController
         if (!empty($_POST)) {
             try {
                 User::updateProfile($_POST, $user);
-                session_start();
                 $_SESSION['flesh'] = 'Success';
                 header('Location: /users/profile');
                 exit();
@@ -72,5 +70,13 @@ class UserController
         } else {
             header('Location: /');
         }
+    }
+
+    public function logout()
+    {
+        $user = UsersAuthService::getUserByToken();
+        $user->setAuthToken('');
+        $user->save();
+        header('Location: /');
     }
 }
