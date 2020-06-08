@@ -152,6 +152,11 @@ class User extends ActiveRecordEntity
         return $this->authToken;
     }
 
+    public function setAuthToken($authToken): void
+    {
+        $this->authToken = $authToken;
+    }
+
     public function getEmail(): string
     {
         return $this->email;
@@ -165,6 +170,11 @@ class User extends ActiveRecordEntity
     public function getImage()
     {
         return $this->image;
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password;
     }
 
     public function setImage($image): void

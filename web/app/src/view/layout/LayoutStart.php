@@ -23,19 +23,32 @@
                         Project
                     </a>
                     <?php
-                    $user = App\Services\UsersAuthService::getUserByToken();
-                    if (!empty($user)) : ?>
+                    if (!empty($data['user'])) { ?>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ml-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/users/profile"><?= $user->getName() ?></a>
+                                    <a class="nav-link" href="/users/profile"><?= $data['user']->getName() ?></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/logout">Logout</a>
+                                    <a class="nav-link" href="/users/logout">Logout</a>
                                 </li>
                             </ul>
                         </div>
-                    <?php endif; ?>
+                    <?php } else {
+                    ?>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/users/register">Register</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/users/login">Login</a>
+                                </li>
+                            </ul>
+                        </div>
+                    <?php
+                    }
+                    ?>
                 </div>
             </nav>
             <div class="row justify-content-center">

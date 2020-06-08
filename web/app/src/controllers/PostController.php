@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Controller;
-
+use App\Exceptions\InvalidArgumentException;
 use App\Model\Post;
-use App\Model\User;
 use App\Services\UsersAuthService;
 use App\View\View;
 
@@ -19,10 +18,18 @@ class PostController
 
     public function create()
     {
-        $post = new Post();
-        $post->setBody($_POST['body']);
-        $post->setOwner(UsersAuthService::getUserByToken());
-        $post->save();
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        try {
+            Post::add($_POST);
+            $_SESSION['flesh'] = 'Success';
+            header('Location: /');
+            exit();
+        } catch (InvalidArgumentException $e) {
+            View::render('Profile', [
+                'posts' => Post::findAll(),
+                'user' => UsersAuthService::getUserByToken(),
+                'error' => $e->getMessage()
+            ]);
+            exit();
+        }
     }
 }
